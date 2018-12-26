@@ -8,10 +8,9 @@ Created on Sat Dec 15 19:06:50 2018
 import cv2
 import numpy as np
 import math
-from numba import jit, prange
 
 
-# @jit(parallel=True)
+
 def feature_color(img_in):
     """
     输入:RGB图像
@@ -20,8 +19,8 @@ def feature_color(img_in):
     rows = img_in.shape[0]
     cols = img_in.shape[1]
     vec_color = np.zeros(48, 'uint32')
-    for i in prange(rows):
-        for j in prange(cols):
+    for i in range(rows):
+        for j in range(cols):
             b = img[i][j][0] / 16
             g = img[i][j][1] / 16
             r = img[i][j][2] / 16
@@ -35,7 +34,7 @@ def feature_color(img_in):
     return vec_color
 
 
-# @jit(parallel=True)
+
 def feature_texture(img_in):
     "输入：RGB图像  ；输出：256维向量（直方图），记录LBP算法的纹理信息  性能依旧堪忧"
 
@@ -48,8 +47,8 @@ def feature_texture(img_in):
 
     img_lbp = img_gray.copy()
 
-    for i in prange(1, rows - 1):
-        for j in prange(1, cols - 1):
+    for i in range(1, rows - 1):
+        for j in range(1, cols - 1):
             current = img_gray[i][j]
             lbpcode = 0
             if current > img_gray[i - 1][j - 1]:
